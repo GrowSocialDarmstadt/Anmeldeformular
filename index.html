@@ -684,29 +684,7 @@
     const url = `https://script.google.com/macros/s/AKfycbwFzf7meM1ZG4ri_vOXC-tKE63Irs1vZFhZk5vbFb3w/exec?Name=Weissgerber&Vorname=Sebastian&Geburtsdatum=1999-12-12&geschlecht=weiblich&strasse=Linden&hausnummer=34b
 `;
 
-    // GET Request senden
-    const response = await fetch(url, {
-        method: 'GET',
-        mode: 'cors'
-    });
-
-    const result = await response.json();
-
-    if (result.success) {
-        loading.style.display = 'none';
-        document.querySelector('.info-box').style.display = 'none';
-        form.style.display = 'none';
-        success.style.display = 'block';
-        success.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        throw new Error(result.error || 'Unbekannter Fehler');
-    }
-
-} catch (error) {
-    loading.style.display = 'none';
-    submitBtn.style.display = 'block';
-    alert('Fehler beim Senden: ' + error.message);
-}
+     window.location.href = url;
  });
 
     </script>
