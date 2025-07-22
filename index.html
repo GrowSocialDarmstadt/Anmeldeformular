@@ -677,35 +677,10 @@
 
     // URL mit Parametern
     const params = new URLSearchParams(data).toString();
+    const url = `${baseUrl}?Nachname=ewr`;
+    window.open(url, '_blank');
 
-    try {
-        const response = await fetch(`${baseUrl}?Nachname=ewr`, {
-            method: 'GET',
-            // falls POST gewünscht ist, hier method: 'POST', body: JSON.stringify(data), headers setzen
-        });
 
-        if (!response.ok) throw new Error('Netzwerkantwort war nicht ok.');
-
-        const result = await response.text();  // Je nach Antwortformat: .json() oder .text()
-
-        loading.style.display = 'none';
-        success.style.display = 'block';
-        success.textContent = 'Deine Daten wurden erfolgreich gesendet!';
-
-        // Optional: Formular zurücksetzen
-        form.reset();
-        ibanContainer.classList.remove('active');
-        ibanInput.className = '';
-        ibanFeedback.textContent = '';
-        ibanValidation.textContent = '';
-        geburtsdatumInput.className = '';
-        document.getElementById('geburtsdatum-validation').textContent = '';
-
-    } catch (error) {
-        loading.style.display = 'none';
-        submitBtn.style.display = 'block';
-        alert('Fehler beim Senden: ' + error.message);
-    }
 });
     </script>
 </body>
