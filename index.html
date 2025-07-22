@@ -675,15 +675,38 @@
     // URL Basis (Apps Script Web App URL)
     const baseUrl = 'https://script.google.com/macros/s/AKfycbwFzf7meM1ZG4ri_vOXC-tKE63Irs1vZFhZk5vbFb3w/exec';
 
-    // Alle Schlüssel-Wert-Paare aus data in URL-Parameter umwandeln
+    // URL mit Parametern
     const params = new URLSearchParams(data).toString();
 
-    // Komplette URL mit Parametern
-    const url = `https://script.google.com/macros/s/AKfycbw7YlyIPO1YFwSbBBL4UTAZxYpq9RnHejUizTT4fRypd_BsgJiMviErVomITe5ya9-2/exec?Name=Weersdfsdfissgerber&Vorname=Sebastian`;
+    try {
+        const response = await fetch(`${baseUrl}?${params}`, {
+            method: 'GET',
+            // falls POST gewünscht ist, hier method: 'POST', body: JSON.stringify(data), headers setzen
+        });
 
-     window.location.href = url;
-});  
+        if (!response.ok) throw new Error('Netzwerkantwort war nicht ok.');
 
+        const result = await response.text();  // Je nach Antwortformat: .json() oder .text()
+
+        loading.style.display = 'none';
+        success.style.display = 'block';
+        success.textContent = 'Deine Daten wurden erfolgreich gesendet!';
+
+        // Optional: Formular zurücksetzen
+        form.reset();
+        ibanContainer.classList.remove('active');
+        ibanInput.className = '';
+        ibanFeedback.textContent = '';
+        ibanValidation.textContent = '';
+        geburtsdatumInput.className = '';
+        document.getElementById('geburtsdatum-validation').textContent = '';
+
+    } catch (error) {
+        loading.style.display = 'none';
+        submitBtn.style.display = 'block';
+        alert('Fehler beim Senden: ' + error.message);
+    }
+});
     </script>
 </body>
 </html>
